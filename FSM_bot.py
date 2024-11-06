@@ -17,29 +17,29 @@ class BRSD_sm(object):
         self.dist = np.sqrt(self.toy_array_x[self.point_index]**2 + self.toy_array_y[self.point_index]**2)
         self.theta = np.rad2deg(np.arctan(self.toy_array_x[self.point_index] / self.toy_array_y[self.point_index]))
         
-    def forward_ready(self, even_data):
-        return (self.theta == 0 and self.dist > 0)
+    def i1_to_f1(self, even_data):
+        return (self.theta > -5 and self.theta < 5 and self.dist > 0)
 
-    def left_ready(self, even_data):
-        return (self.theta < 0 and self.dist > 0)
-    
-    def right_ready(self, even_data):
-        return (self.theta > 0 and self.dist > 0)
-    
-    def idle_ready(self, even_data):
-        return self.dist <= 0
+    def i1_to_l1(self, even_data):
+        return (self.theta < -5 and self.dist > 0)
+
+    def i1_to_r1(self, even_data):
+        return (self.theta > 5 and self.dist > 0)
+
+    def f1_to_l1(self, even_data):
+        return (self.theta < -5 and self.dist > 0)        
 
 # define machine states
 states = ['i1', 'f1', 'f2', 'l1', 'l2', 'r1', 'r2', 's1', 's2', 'b1']
 
 # define transition conditions
 transitions = [
-    ## idle transitions
-    {'trigger': 'check', 'source': 'i1', 'dest': 'f1', 'conditions': 'forward_ready'},
-    {'trigger': 'check', 'source': 'i1', 'dest': 'l1', 'conditions': 'left_ready'},
-    {'trigger': 'check', 'source': 'i1', 'dest': 'r1', 'conditions': 'right_ready'},
+    ## idle 1 transitions
+    {'trigger': 'check', 'source': 'i1', 'dest': 'f1', 'conditions': 'i1_to_f1'},
+    {'trigger': 'check', 'source': 'i1', 'dest': 'l1', 'conditions': 'i1_to_l1'},
+    {'trigger': 'check', 'source': 'i1', 'dest': 'r1', 'conditions': 'i1_to_r1'},
     
-    # forward transitions
+    # forward 1 transitions
     {'trigger': 'check', 'source': 'f1', 'dest': 'i1', 'conditions': 'idle_ready'},
     {'trigger': 'check', 'source': 'f1', 'dest': 'l1', 'conditions': 'left_ready'},
     {'trigger': 'check', 'source': 'f1', 'dest': 'r1', 'conditions': 'right_ready'},   
