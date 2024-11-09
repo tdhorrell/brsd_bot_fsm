@@ -78,6 +78,41 @@ class BRSD_sm(object):
     
     def state_to_s2(self, even_data):
         return self.user_flag == False
+    
+
+    #---------------------------
+    #       Callbacks
+    #---------------------------
+
+    def callback_i1(self, even_data):
+        self.get_logger().info('i1 CALLBACK')
+
+    def callback_f1(self, even_data):
+        self.get_logger().info('f1 CALLBACK')
+
+    def callback_f2(self, even_data):
+        self.get_logger().info('f2 CALLBACK')
+
+    def callback_l1(self, even_data):
+        self.get_logger().info('l1 CALLBACK')
+
+    def callback_l2(self, even_data):
+        self.get_logger().info('l2 CALLBACK')
+
+    def callback_r1(self, even_data):
+        self.get_logger().info('r1 CALLBACK')
+
+    def callback_r2(self, even_data):
+        self.get_logger().info('r2 CALLBACK')
+
+    def callback_s1(self, even_data):
+        self.get_logger().info('s1 CALLBACK')
+
+    def callback_s2(self, even_data):
+        self.get_logger().info('s2 CALLBACK')
+
+    def callback_b1(self, even_data):
+        self.get_logger().info('b1 CALLBACK')                  
 
 # define machine states
 states = ['i1', 'f1', 'f2', 'l1', 'l2', 'r1', 'r2', 's1', 's2', 'b1']
@@ -151,6 +186,18 @@ class BRSD_machine(object):
 
         # running mode
         self.running = True
+
+        # initialize callbakcs
+        self.machine.on_enter_i1('callback_i1')
+        self.machine.on_enter_f1('callback_f1')
+        self.machine.on_enter_f2('callback_f2')
+        self.machine.on_enter_l1('callback_l1')
+        self.machine.on_enter_l2('callback_l2')
+        self.machine.on_enter_r1('callback_r1')
+        self.machine.on_enter_r2('callback_r2')
+        self.machine.on_enter_s1('callback_s1')
+        self.machine.on_enter_s2('callback_s2')
+        self.machine.on_enter_b1('callback_b1')
 
         # state memory for testing verification
         self.state_mem = []
