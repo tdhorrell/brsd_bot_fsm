@@ -28,6 +28,9 @@ class BRSD_sm(object):
     
     def idle_ready(self, even_data):
         return self.dist <= 0
+    
+    def callback_f1(self, even_data):
+        print("FORWARD CALLBACK")
 
 # define machine states
 states = ['i1', 'f1', 'l1', 'r1']
@@ -63,6 +66,9 @@ class BRSD_machine(object):
 
         # running mode
         self.running = True
+
+        # add callbacks
+        self.machine.on_enter_f1('callback_f1')
 
     def run(self):
         while self.running:
